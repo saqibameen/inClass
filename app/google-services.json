@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "914544692482",
+    "firebase_url": "https://mad-project-7543e.firebaseio.com",
+    "project_id": "mad-project-7543e",
+    "storage_bucket": "mad-project-7543e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:914544692482:android:c87494d167af49f1",
+        "android_client_info": {
+          "package_name": "com.example.saqibameen.app01"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "914544692482-2nqt939vkt77sfvgut834p88gkrso3oi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.saqibameen.app01",
+            "certificate_hash": "f79ea70012fe5c71b82d95c6acafe22eeaa9360d"
+          }
+        },
+        {
+          "client_id": "914544692482-mtie3uhnvq565lgq5dh80sajqh8gloq9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPXzqNTbUSXJBhKk-THI8VtgcFkINPArc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "914544692482-mtie3uhnvq565lgq5dh80sajqh8gloq9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
