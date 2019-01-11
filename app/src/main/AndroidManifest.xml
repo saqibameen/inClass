@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.saqibameen.app01">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,7 +23,14 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".Courses" />
         <!-- <activity android:name=".SplashScreen"></activity> -->
-        <activity android:name=".Attendance"></activity>
+        <activity android:name=".Attendance" />
+        <activity android:name=".CourseDashboard" />
+        <activity android:name=".ReportsDashboard" />
+        <activity android:name=".CourseReport" />
+        <activity android:name=".StudentReport" />
+        <activity android:name=".DailyReport" />
+        <activity android:name=".StudentReportView" />
+        <activity android:name=".TeacherDashboard"></activity>
     </application>
 
 </manifest>

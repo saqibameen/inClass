@@ -99,7 +99,7 @@ public class Courses extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
                 // Create new intent.
-                Intent intent = new Intent(Courses.this, Attendance.class);
+                Intent intent = new Intent(Courses.this, CourseDashboard.class);
                 // Grab the item clicked.
                 String item = (String) parent.getItemAtPosition(position);
                 // Attach the string to new intent.
@@ -108,20 +108,5 @@ public class Courses extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
-
-    // Backpress control.
-    @Override
-    public void onBackPressed() {
-        new AlertDialog.Builder(this)
-                .setTitle("Really Exit?")
-                .setMessage("Are you sure you want to exit?")
-                .setNegativeButton(android.R.string.no, null)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        Courses.super.onBackPressed();
-                    }
-                }).create().show();
     }
 }

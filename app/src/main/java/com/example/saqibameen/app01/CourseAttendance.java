@@ -1,5 +1,7 @@
 package com.example.saqibameen.app01;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -9,7 +11,7 @@ public class CourseAttendance {
     private ArrayList<String> presentStudents = new ArrayList<String>();
     private ArrayList<String> absentStudents = new ArrayList<String>();
     private ArrayList<String> leaveStudents = new ArrayList<String>();
-    private Date currentDate;
+    private String currentDate;
 
     public ArrayList<String> getLeaveStudents() {
         return leaveStudents;
@@ -19,17 +21,17 @@ public class CourseAttendance {
         this.leaveStudents = leaveStudents;
     }
 
-    public Date getCurrentDate() {
+    public String getCurrentDate() {
         return currentDate;
     }
 
-    public void setCurrentDate(Date currentDate) {
+    public void setCurrentDate(String currentDate) {
         this.currentDate = currentDate;
     }
 
     //Empty Constructor
 
-    public CourseAttendance(String courseName, ArrayList<String> presentStudents, ArrayList<String> absentStudents, ArrayList<String> leaveStudents, Date currentDate) {
+    public CourseAttendance(String courseName, ArrayList<String> presentStudents, ArrayList<String> absentStudents, ArrayList<String> leaveStudents, String currentDate) {
         this.courseName = courseName;
         this.presentStudents = presentStudents;
         this.absentStudents = absentStudents;
@@ -38,7 +40,10 @@ public class CourseAttendance {
     }
 
     public CourseAttendance(){
-        this.currentDate = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        String strDate = dateFormat.format(date).toString();
+        this.currentDate = strDate;
     }
 
     //Getters and Setters

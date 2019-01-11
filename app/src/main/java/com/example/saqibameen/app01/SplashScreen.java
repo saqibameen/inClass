@@ -23,7 +23,7 @@ public class SplashScreen extends AppCompatActivity {
         runnable = new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(mContext, Courses.class);
+                Intent intent = new Intent(mContext, TeacherDashboard.class);
                 startActivity(intent);
                 finish();
             }
