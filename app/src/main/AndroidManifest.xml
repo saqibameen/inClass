@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.saqibameen.app01">
 
+    <meta-data
+        android:name="android.support.PARENT_ACTIVITY"
+        android:value="TeacherDashboard" />
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application

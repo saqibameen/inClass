@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -34,8 +37,33 @@ public class StudentReport extends AppCompatActivity {
     private ArrayList<Student> students= new ArrayList<>();
     private StudentReportList list;
 
+    // Set up the menu.
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    // Listener for clicks.
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // If the back button is pressed.
+        if (item.getItemId() == android.R.id.home) {
+            super.onBackPressed();
+            return true;
+        }
+        // Create new intent.
+        Intent login = new Intent(StudentReport.this, MainActivity.class);
+        startActivity(login);
+        // Finish currentActivity.
+        finish();
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_report);
         // Set the title.

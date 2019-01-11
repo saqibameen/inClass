@@ -1,8 +1,12 @@
 package com.example.saqibameen.app01;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -28,8 +32,33 @@ public class StudentReportView extends AppCompatActivity {
     // Roll No.
     private String rollNo;
 
+    // Set up the menu.
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    // Listener for clicks.
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // If the back button is pressed.
+        if (item.getItemId() == android.R.id.home) {
+            super.onBackPressed();
+            return true;
+        }
+        // Create new intent.
+        Intent login = new Intent(StudentReportView.this, MainActivity.class);
+        startActivity(login);
+        // Finish currentActivity.
+        finish();
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_report_view);
         // Set Title.

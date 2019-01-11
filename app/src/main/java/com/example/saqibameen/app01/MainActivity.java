@@ -1,7 +1,9 @@
 package com.example.saqibameen.app01;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,19 +35,26 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Login the user
+     *
+     * @param view Takes current view.
+     */
     public void login(View view) {
-
-
+        // Grab the data.
         String email = ((TextView)findViewById(R.id.txtEmail)).getText().toString();
         String password = ((TextView)findViewById(R.id.txtPassword)).getText().toString();
 
+        // Checks.
         if(email.isEmpty() || password.isEmpty()) {
             return;
         }
 
+        // Notice
         Toast.makeText(MainActivity.this, "Loading...",
                 Toast.LENGTH_SHORT).show();
 
+        // Finally login.
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -78,4 +87,11 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    // Backpress control.
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
+
 }

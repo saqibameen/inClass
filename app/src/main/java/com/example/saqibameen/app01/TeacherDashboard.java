@@ -6,9 +6,15 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 public class TeacherDashboard extends AppCompatActivity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +39,25 @@ public class TeacherDashboard extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    // Set up the menu.
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    // Listener for clicks.
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Create new intent.
+        Intent login = new Intent(TeacherDashboard.this, MainActivity.class);
+        startActivity(login);
+        // Finish currentActivity.
+        finish();
+        return super.onOptionsItemSelected(item);
     }
 
     // Backpress control.

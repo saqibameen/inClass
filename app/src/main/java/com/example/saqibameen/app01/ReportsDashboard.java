@@ -4,12 +4,40 @@ import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 public class ReportsDashboard extends AppCompatActivity {
 
+    // Set up the menu.
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    // Listener for clicks.
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // If the back button is pressed.
+        if (item.getItemId() == android.R.id.home) {
+            super.onBackPressed();
+            return true;
+        }
+        // Create new intent.
+        Intent login = new Intent(ReportsDashboard.this, MainActivity.class);
+        startActivity(login);
+        // Finish currentActivity.
+        finish();
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reports_dashboard);
         // Set the title.
