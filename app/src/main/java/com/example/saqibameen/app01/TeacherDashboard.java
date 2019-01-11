@@ -32,9 +32,9 @@ public class TeacherDashboard extends AppCompatActivity {
                 // Create new intent.
                 Intent intent = new Intent(TeacherDashboard.this, Courses.class);
                 // Grab the extra from previous intent.
-//                String uid = getIntent().getStringExtra("uid");
+                String uid = getIntent().getStringExtra("uid");
                 // Attach the string to new intent.
-//                intent.putExtra("uid", uid);
+                intent.putExtra("uid", uid);
                 // Start the new activity.
                 startActivity(intent);
             }

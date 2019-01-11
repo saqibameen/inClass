@@ -53,6 +53,9 @@ public class CourseReport extends AppCompatActivity {
     // Data members.
     private PieChart pieChart;
     private String courseName;
+    private Float present;
+    private Float absent;
+    private Float leave;
 
     // Set up the menu.
     @Override
@@ -150,9 +153,9 @@ public class CourseReport extends AppCompatActivity {
         // Total Attendances.
         Float totalAttendances = totalPresent + totalAbsent + totalLeave;
         // Percentage of each.
-        Float present = totalPresent/totalAttendances;
-        Float absent = totalAbsent/totalAttendances;
-        Float leave = totalLeave/totalAttendances;
+        present = totalPresent/totalAttendances;
+        absent = totalAbsent/totalAttendances;
+        leave = totalLeave/totalAttendances;
 
 
         // Add the data.
@@ -182,5 +185,99 @@ public class CourseReport extends AppCompatActivity {
         // Set Legend Alignment.
         Legend legend = pieChart.getLegend();
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+    }
+
+    /**
+     * Generate the PDF.
+     *
+     * @param view current view.
+     */
+    public void generatePDF(View view) {
+        // Create new document.
+        Document doc = new Document();
+        // Path to the course report.
+        String path = Environment.getExternalStorageDirectory() + "/CourseReport.pdf";
+        // Check for path and write.
+        try {
+            // Get instance.
+            PdfWriter.getInstance(doc, new FileOutputStream(path));
+            // Open the document.
+            doc.open();
+
+            // LINE SEPARATOR
+            LineSeparator lineSeparator = new LineSeparator();
+            lineSeparator.setLineColor(new BaseColor(0, 0, 0, 68));
+
+            // Adding Title
+            Font font = new Font(Font.FontFamily.HELVETICA, 20); // Heading Font
+            Font detailsFont = new Font(Font.FontFamily.HELVETICA, 14); // Details Font
+            // Creating Chunk
+            Chunk titleChunk = new Chunk(courseName + " Attendance Report", font);
+            // Creating Paragraph to add...
+            Paragraph titleParagraph = new Paragraph(titleChunk);
+            // Setting Alignment for Heading
+            titleParagraph.setAlignment(Element.ALIGN_CENTER);
+            // Finally Adding that Chunk
+            doc.add(titleParagraph);
+
+            // Add Date.
+            Date date = Calendar.getInstance().getTime();
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+            String strDate = dateFormat.format(date);
+            Chunk dateChunk = new Chunk("Timestamp: " + strDate, detailsFont);
+            // Creating Paragraph to add...
+            Paragraph datePara = new Paragraph(dateChunk);
+            // Setting Alignment for Heading
+            datePara.setAlignment(Element.ALIGN_RIGHT);
+            // Add to doc.
+            doc.add(datePara);
+
+
+            // Add the line separator.
+            doc.add(new Paragraph(""));
+            doc.add(new Chunk(lineSeparator));
+            doc.add(new Paragraph(""));
+
+            // Present Data.
+            // Creating Chunk
+            Float pp = present *100f;
+            Chunk presentChunk = new Chunk("Present Percentage = " + pp.toString() + "%", detailsFont);
+            // Creating Paragraph to add...
+            Paragraph presentParagraph = new Paragraph(presentChunk);
+            // Add to doc.
+            doc.add(presentParagraph);
+
+            // Absent Data.
+            // Creating Chunk
+            Float aa = absent *100f;
+            Chunk absentChunk = new Chunk("Absent Percentage = " + aa.toString() + "%", detailsFont);
+            // Creating Paragraph to add...
+            Paragraph absentPara = new Paragraph(absentChunk);
+            // Add to doc.
+            doc.add(absentPara);
+
+            // Leave Data.
+            // Creating Chunk
+            Float ll = leave *100f;
+            Chunk leaveChunk = new Chunk("Leave Percentage = " + ll.toString() + "%", detailsFont);
+            // Creating Paragraph to add...
+            Paragraph leavePara = new Paragraph(leaveChunk);
+            // Add to doc.
+            doc.add(leavePara);
+
+            // Close the document.
+            doc.close();
+
+            // Toast Message.
+            Toast.makeText(CourseReport.this, "PDF Saved!", Toast.LENGTH_SHORT).show();
+
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

@@ -62,7 +62,7 @@ public class Courses extends AppCompatActivity {
         // Activity Title.
         setTitle("Courses Teaching");
 
-        String uid = "18ui18zt76aK8GQMwN5pJFIjHqj2";
+        String uid = getIntent().getStringExtra("uid");
 
         // Database Reference.
         final FirebaseDatabase database = FirebaseDatabase.getInstance();

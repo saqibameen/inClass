@@ -2,11 +2,14 @@ package com.example.saqibameen.app01;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -21,8 +24,24 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.draw.LineSeparator;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class StudentReportView extends AppCompatActivity {
     // Arraylist to store the data.
@@ -31,6 +50,11 @@ public class StudentReportView extends AppCompatActivity {
     private PieChart pieChart;
     // Roll No.
     private String rollNo;
+    // Final Data for report.
+    private Float present;
+    private Float absent;
+    private Float leave;
+    private String courseName;
 
     // Set up the menu.
     @Override
@@ -66,7 +90,7 @@ public class StudentReportView extends AppCompatActivity {
         // Grab the values from the intent.
         // Roll No and Course Name.
         rollNo = getIntent().getStringExtra("rollNo");
-        String courseName = getIntent().getStringExtra("courseName");
+        courseName = getIntent().getStringExtra("courseName");
 
         // Grab the data from the db.
         // Database Reference.
@@ -128,9 +152,9 @@ public class StudentReportView extends AppCompatActivity {
         // Total Attendances.
         Float totalAttendances = (float) attendanceList.size();
         // Percentage of each.
-        Float present = totalPresent/totalAttendances;
-        Float absent = totalAbsent/totalAttendances;
-        Float leave = totalLeave/totalAttendances;
+        present = totalPresent/totalAttendances;
+        absent = totalAbsent/totalAttendances;
+        leave = totalLeave/totalAttendances;
 
 
         // Add the data.
@@ -160,5 +184,98 @@ public class StudentReportView extends AppCompatActivity {
         // Set Legend Alignment.
         Legend legend = pieChart.getLegend();
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+    }
+
+    /**
+     * Generate the PDF.
+     *
+     * @param view current view.
+     */
+    public void generatePDF(View view) {
+        // Create new document.
+        Document doc = new Document();
+        // Path to the course report.
+        String path = Environment.getExternalStorageDirectory() + "/StudentReport.pdf";
+        // Check for path and write.
+        try {
+            // Get instance.
+            PdfWriter.getInstance(doc, new FileOutputStream(path));
+            // Open the document.
+            doc.open();
+
+            // LINE SEPARATOR
+            LineSeparator lineSeparator = new LineSeparator();
+            lineSeparator.setLineColor(new BaseColor(0, 0, 0, 68));
+
+            // Adding Title
+            Font font = new Font(Font.FontFamily.HELVETICA, 20); // Heading Font
+            Font detailsFont = new Font(Font.FontFamily.HELVETICA, 14); // Details Font
+            // Creating Chunk
+            Chunk titleChunk = new Chunk("(" + rollNo + ") " + courseName +" Attendance Report", font);
+            // Creating Paragraph to add...
+            Paragraph titleParagraph = new Paragraph(titleChunk);
+            // Setting Alignment for Heading
+            titleParagraph.setAlignment(Element.ALIGN_CENTER);
+            // Finally Adding that Chunk
+            doc.add(titleParagraph);
+
+            // Add Date.
+            Date date = Calendar.getInstance().getTime();
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+            String strDate = dateFormat.format(date);
+            Chunk dateChunk = new Chunk("Timestamp: " + strDate, detailsFont);
+            // Creating Paragraph to add...
+            Paragraph datePara = new Paragraph(dateChunk);
+            // Setting Alignment for Heading
+            datePara.setAlignment(Element.ALIGN_RIGHT);
+            // Add to doc.
+            doc.add(datePara);
+
+
+            // Add the line separator.
+            doc.add(new Paragraph(""));
+            doc.add(new Chunk(lineSeparator));
+            doc.add(new Paragraph(""));
+
+            // Present Data.
+            // Creating Chunk
+            Float pp = present *100f;
+            Chunk presentChunk = new Chunk("Present Percentage = " + pp.toString() + "%", detailsFont);
+            // Creating Paragraph to add...
+            Paragraph presentParagraph = new Paragraph(presentChunk);
+            // Add to doc.
+            doc.add(presentParagraph);
+
+            // Absent Data.
+            // Creating Chunk
+            Float aa = absent *100f;
+            Chunk absentChunk = new Chunk("Absent Percentage = " + aa.toString() + "%", detailsFont);
+            // Creating Paragraph to add...
+            Paragraph absentPara = new Paragraph(absentChunk);
+            // Add to doc.
+            doc.add(absentPara);
+
+            // Leave Data.
+            // Creating Chunk
+            Float ll = leave *100f;
+            Chunk leaveChunk = new Chunk("Leave Percentage = " + ll.toString() + "%", detailsFont);
+            // Creating Paragraph to add...
+            Paragraph leavePara = new Paragraph(leaveChunk);
+            // Add to doc.
+            doc.add(leavePara);
+
+            // Close the document.
+            doc.close();
+
+            // Toast Message.
+            Toast.makeText(StudentReportView.this, "PDF Saved!", Toast.LENGTH_SHORT).show();
+
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

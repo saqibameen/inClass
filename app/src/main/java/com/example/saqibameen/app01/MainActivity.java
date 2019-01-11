@@ -71,9 +71,9 @@ public class MainActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
 
                             // Forward to next activity.
-                            Intent intent = new Intent(MainActivity.this, Courses.class);
+                            Intent intent = new Intent(MainActivity.this, TeacherDashboard.class);
                             // Attach the user data.
-                            intent.putExtra("user", user.getUid());
+                            intent.putExtra("uid", user.getUid());
                             startActivity(intent);
                             finish();
 
